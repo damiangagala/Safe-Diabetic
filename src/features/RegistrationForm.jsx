@@ -1,0 +1,95 @@
+import toast from "react-hot-toast";
+import { signUp } from "../services/usersAPI";
+import { useForm } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+
+function RegistrationForm() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const navigate = useNavigate();
+
+  // function handleSubmit(e) {
+  //   e.preventDefault();
+
+  //   if (!email.includes("@")) {
+  //     toast.error("Wrong mail!");
+  //     return;
+  //   }
+  //   if (password.length < 6) {
+  //     toast.error("Atleast 6 characters");
+  //     return;
+  //   }
+  //   if (password !== repeatPassword) {
+  //     toast.error("Password doesnt match!");
+  //     return;
+  //   }
+  //   signUp(email, password);
+  // }
+  const { mutate: registration, isPending } = useMutation({
+    mutationFn: ({ formData }) => signUp(formData.mail, formData.password),
+    onSuccess: () => navigate("../login"),
+  });
+
+  return (
+    <div className="mx-auto my-48 flex w-fit flex-col items-center  rounded-md rounded-r-none bg-slate-200 p-20">
+      <h1 className="p-9 text-center text-5xl">Rejestracja</h1>
+      <form
+        className="m-10 flex w-80 flex-col items-center pb-20 "
+        onSubmit={handleSubmit((formData) => {
+          formData.repeat === formData.password
+            ? registration({ formData })
+            : "Hasła muszą być takie same";
+        })}
+      >
+        <div className="m-1">
+          <input
+            {...register("mail", {
+              required: "Musisz podać maila",
+            })}
+            className=" w-72 rounded-2xl p-2 pl-3 text-slate-400"
+            placeholder="Email"
+          />
+        </div>
+        <div className="m-1">
+          <input
+            {...register("username", {
+              required: "Musisz podać maila",
+            })}
+            className=" w-72 rounded-2xl p-2 pl-3 text-slate-400"
+            placeholder="Nazwa użytkownika"
+          />
+        </div>
+        <div className="m-2 ">
+          <input
+            {...register("password", { minLength: 6 })}
+            className="w-72 rounded-2xl p-2 pl-3 text-slate-400"
+            type="password"
+            placeholder="Hasło"
+          />
+        </div>
+        <div className="m-2 ">
+          <input
+            {...register("repeat", { minLength: 6 })}
+            className="w-72 rounded-2xl p-2 pl-3 text-slate-400"
+            type="password"
+            placeholder="Powtórz hasło"
+          />
+        </div>
+        <button
+          className="m-5 w-40 cursor-pointer rounded-3xl bg-slate-300 p-2"
+          type="submit"
+          value="Login"
+          disabled={isPending}
+        >
+          Zarejestruj się
+        </button>
+      </form>
+    </div>
+  );
+}
+
+export default RegistrationForm;
