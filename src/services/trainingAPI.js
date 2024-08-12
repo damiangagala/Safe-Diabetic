@@ -116,13 +116,13 @@ export async function editTrainingPlan(items, author, planId, trainingId) {
   const { error: training_weekError } = await supabase
     .from("training_week")
     .update({
-      monday: items.monday,
-      tuesday: items.tuesday,
-      wednesday: items.wednesday,
-      thursday: items.thursday,
-      friday: items.friday,
-      saturday: items.saturday,
-      sunday: items.sunday,
+      monday: items.Poniedziałek,
+      tuesday: items.Wtorek,
+      wednesday: items.Środa,
+      thursday: items.Czwartek,
+      friday: items.Piątek,
+      saturday: items.Sobota,
+      sunday: items.Niedziela,
     })
     .eq("id", trainingId)
     .select();

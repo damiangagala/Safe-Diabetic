@@ -4,8 +4,19 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { addTrainingPlan, editTrainingPlan } from "../../services/trainingAPI";
 import toast from "react-hot-toast";
 import { getAuthorId } from "../../services/usersAPI";
+import { useState } from "react";
 
 function TrainingForm({ close, data, isEdit }) {
+  const [step, setStep] = useState(0);
+
+  const nextStep = () => {
+    setStep((step) => step + 1);
+  };
+
+  const previousStep = () => {
+    setStep((step) => step - 1);
+  };
+
   const userQuery = useQuery({
     queryKey: ["loggedProfile"],
     queryFn: getAuthorId,
@@ -16,13 +27,13 @@ function TrainingForm({ close, data, isEdit }) {
   const trainingId = data?.training_id;
 
   const week = [
-    "monday",
-    "tuesday",
-    "wednesday",
-    "thursday",
-    "friday",
-    "saturday",
-    "sunday",
+    "Poniedziałek",
+    "Wtorek",
+    "Środa",
+    "Czwartek",
+    "Piątek",
+    "Sobota",
+    "Niedziela",
   ];
 
   const { register, control, handleSubmit, reset } = useForm({
@@ -54,7 +65,7 @@ function TrainingForm({ close, data, isEdit }) {
 
   return (
     <form
-      className="flex flex-wrap gap-3 p-2"
+      className="flex h-[90%] flex-col justify-between gap-3 overflow-auto p-4"
       onSubmit={handleSubmit((formData) => {
         isEdit === true
           ? edit({ formData, author, planId, trainingId })
@@ -63,7 +74,7 @@ function TrainingForm({ close, data, isEdit }) {
         close(false);
       })}
     >
-      {week.map((day) => (
+      {/* {week.map((day) => (
         <TrainingInput
           key={week.indexOf(day)}
           control={control}
@@ -72,19 +83,52 @@ function TrainingForm({ close, data, isEdit }) {
           register={register}
           isEdit={isEdit}
         />
-      ))}
+      ))} */}
 
-      <div className=" flex basis-[30%] flex-col text-center">
-        <label className="trainingLabel">Tytuł</label>
-        <input className="trainingInput" {...register("title")} />
-        <label className="trainingLabel">Opis</label>
-        <input className="trainingInput" {...register("description")} />
-        <label className="trainingLabel">Czas</label>
-        <input className="trainingInput" {...register("time")} />
-        <label className="trainingLabel">Trudność</label>
-        <input className="trainingInput" {...register("difficulty")} />
+      {step === 0 && (
+        <div className="mb-6 flex basis-[30%] flex-col text-center ">
+          <label className="trainingLabel">Tytuł</label>
+          <input className="trainingInput" {...register("title")} />
+          <label className="trainingLabel">Opis</label>
+          <input className="trainingInput" {...register("description")} />
+          <label className="trainingLabel">Czas</label>
+          <input className="trainingInput" {...register("time")} />
+          <label className="trainingLabel">Trudność</label>
+          <input className="trainingInput" {...register("difficulty")} />
+        </div>
+      )}
+
+      {step === 1 && (
+        <TrainingInput
+          key={week.indexOf("Poniedziałek")}
+          control={control}
+          day={"Poniedziałek"}
+          data={data?.training_week["monday"]}
+          register={register}
+          isEdit={isEdit}
+        />
+      )}
+      {step === 2 && (
+        <TrainingInput
+          key={week.indexOf("Wtorek")}
+          control={control}
+          day={"Wtorek"}
+          data={data?.training_week["tuesday"]}
+          register={register}
+          isEdit={isEdit}
+        />
+      )}
+      <div className="mx-auto flex flex-col gap-2">
+        {step !== 7 && (
+          <button type="button" onClick={nextStep}>
+            Dalej
+          </button>
+        )}
+
+        {step === 7 && (
+          <button type="submit">{isEdit === true ? "Edytuj" : "Dodaj"}</button>
+        )}
       </div>
-      <button type="submit">Wyślij</button>
     </form>
   );
 }

@@ -8,16 +8,17 @@ function TrainingInput({ control, day, register, data, isEdit }) {
   useEffect(() => {
     if (isEdit === true) {
       data.map((it) => {
+        console.log(it);
         const testing = crypto.randomUUID();
         it.id = testing;
       });
 
       replace(data);
     }
-  }, [replace, data, isEdit]);
+  }, []);
 
   return (
-    <div className="min-h-[9rem] basis-[30%] border-2 border-solid border-black text-center">
+    <div className="mb-4 min-h-[9rem] border-2 border-solid border-white text-center">
       <h3>{day}</h3>
       <ul className="flex flex-col">
         {fields.map((item, index) => {

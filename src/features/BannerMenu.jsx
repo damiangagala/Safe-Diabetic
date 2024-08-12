@@ -34,7 +34,7 @@ function BannerMenu() {
         {data === null ? "Zaloguj" : "Wyloguj"}
       </button>
       {data !== null ? (
-        <button onClick={() => setOpenModal(true)}>Create</button>
+        <button onClick={() => setOpenModal(true)}>Dodaj</button>
       ) : null}
 
       <Modal open={openModal} onClose={setOpenModal}>
