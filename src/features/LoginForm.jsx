@@ -28,7 +28,7 @@ function LoginForm() {
   }
   return (
     <div className="mx-auto flex w-fit">
-      <div className=" my-48 flex w-fit flex-col items-center  rounded-md rounded-r-none bg-slate-200 p-20 pb-0">
+      <div className=" my-48 flex w-fit flex-col items-center  rounded-md rounded-r-none bg-zinc-200 p-20 pb-0">
         <h1 className="p-9 text-center text-5xl">Logowanie</h1>
         <form
           className="m-10 flex w-80 flex-col items-center pb-20 "
@@ -45,14 +45,14 @@ function LoginForm() {
           <div className="m-2 ">
             <input
               onChange={(e) => setPassword(e.target.value)}
-              className="w-72 rounded-2xl p-2 pl-3 text-slate-400"
+              className="w-72 rounded-2xl  p-2 pl-3 "
               type="password"
               placeholder="Hasło"
               value={password}
             />
           </div>
           <button
-            className="m-5 w-40 cursor-pointer rounded-3xl bg-slate-300 p-2"
+            className="m-5 w-40 cursor-pointer rounded-3xl bg-teal-600 p-2 font-bold text-zinc-50"
             type="submit"
             value="Login"
           >
@@ -60,13 +60,13 @@ function LoginForm() {
           </button>
         </form>
       </div>
-      <div className="mx-auto my-48 flex w-96 flex-col  items-center rounded rounded-l-none bg-slate-600 px-9">
+      <div className="mx-auto my-48 flex w-96 flex-col  items-center rounded rounded-l-none bg-zinc-300 px-9">
         <p className="mt-48 text-center text-3xl">
-          If you are new here you can sign up using button below!
+          Jeśli jesteś nowy to zarejestruj się przyciskiem poniżej!
         </p>
         <button
           onClick={handleOnClick}
-          className="m-5 mt-8 w-40 rounded-3xl bg-slate-300 p-2"
+          className="m-5 mt-8 w-40 rounded-3xl bg-teal-600 p-2 font-bold text-zinc-50"
         >
           Sign up
         </button>

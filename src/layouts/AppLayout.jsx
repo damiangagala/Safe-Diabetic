@@ -8,7 +8,7 @@ function AppLayout() {
     <>
       <SearchProvider>
         <Banner />
-        <main className="flex min-h-[89%] w-full justify-between bg-gradient-to-br from-teal-500 to-teal-900 px-20 py-8">
+        <main className="flex w-full justify-between  px-20 py-8">
           <ItemBox />
           <Outlet />
         </main>

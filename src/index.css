@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  height: 100%;
-}
-
 .modal {
   min-width: 90rem;
   min-height: 20rem;
@@ -24,8 +20,4 @@ input {
 
 .trainingInput {
   margin-right: 1rem;
-}
-
-.banner {
-  background-color: #535c91;
 }

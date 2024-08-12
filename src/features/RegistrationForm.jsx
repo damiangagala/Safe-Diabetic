@@ -35,10 +35,10 @@ function RegistrationForm() {
   });
 
   return (
-    <div className="mx-auto my-48 flex w-fit flex-col items-center  rounded-md rounded-r-none bg-slate-200 p-20">
-      <h1 className="p-9 text-center text-5xl">Rejestracja</h1>
+    <div className="mx-auto my-36 flex w-fit flex-col items-center  rounded-md rounded-r-none bg-zinc-200 p-8">
+      <h1 className="p-4 text-center text-5xl">Rejestracja</h1>
       <form
-        className="m-10 flex w-80 flex-col items-center pb-20 "
+        className="m-10 mb-0 flex w-80 flex-col items-center "
         onSubmit={handleSubmit((formData) => {
           formData.repeat === formData.password
             ? registration({ formData })
@@ -80,7 +80,7 @@ function RegistrationForm() {
           />
         </div>
         <button
-          className="m-5 w-40 cursor-pointer rounded-3xl bg-slate-300 p-2"
+          className="my-5 w-40 cursor-pointer rounded-3xl bg-teal-700 p-2 font-bold text-zinc-50"
           type="submit"
           value="Login"
           disabled={isPending}

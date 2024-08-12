@@ -26,11 +26,16 @@ function BannerMenu() {
   }
 
   return (
-    <div className="basis-1/4">
-      <button className="" onClick={handleLogin}>
-        {data === null ? "login" : "logout"}
+    <div className="absolute right-4 top-5 basis-1/4 p-4">
+      <button
+        className="min-w-28 rounded-md border-2 border-zinc-50 p-1 text-xl font-bold text-zinc-50"
+        onClick={handleLogin}
+      >
+        {data === null ? "Zaloguj" : "Wyloguj"}
       </button>
-      <button onClick={() => setOpenModal(true)}>Create</button>
+      {data !== null ? (
+        <button onClick={() => setOpenModal(true)}>Create</button>
+      ) : null}
 
       <Modal open={openModal} onClose={setOpenModal}>
         {activity === "training_plan" ? (

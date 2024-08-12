@@ -7,7 +7,7 @@ function CalendarDay({ item, day }) {
       <div className="border-b-2 border-zinc-50 bg-emerald-800 px-4 py-1 text-2xl font-bold text-zinc-100">
         {day}
       </div>
-      <ul className="mb-1 px-1 pt-2 text-sm">
+      <ul className="mb-1 px-1 text-sm">
         {data !== null ? (
           data.map((item) => (
             <CalendarItem key={data.indexOf(item)} item={item} />

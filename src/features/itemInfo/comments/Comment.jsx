@@ -13,7 +13,7 @@ function Comment({ commentText, info, commentId }) {
   if (isLoading) return;
 
   return (
-    <li className="relative my-2 min-h-min bg-[#DFE2DB]  p-2 text-left">
+    <li className="relative min-h-min border-b-2 border-zinc-400 bg-zinc-100 p-2 text-left first:border-t-2">
       {info.user_id === data?.id ? (
         <button
           onClick={() => deleteComment(commentId)}
