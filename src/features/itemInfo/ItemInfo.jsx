@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { getTrainingItem } from "../../services/trainingAPI";
 import { getRecipeItem } from "../../services/recipesAPI";
 import { getAuthorId } from "../../services/usersAPI";
@@ -18,6 +18,7 @@ function ItemInfo() {
   const activity = searchParams.get("activity");
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+  const editRef = useRef(null);
 
   const itemInfoQuery = useQuery({
     queryKey: ["itemInfoData", id, activity],
@@ -51,6 +52,7 @@ function ItemInfo() {
             itemInfoQuery={itemInfoQuery}
             userQuery={userQuery}
             open={setIsOpen}
+            editRef={editRef}
           />
         ) : null}
       </div>
@@ -89,6 +91,7 @@ function ItemInfo() {
             close={setIsOpen}
             data={itemInfoQuery.data}
             isEdit={true}
+            outsideRef={editRef}
           />
         ) : (
           <RecipeForm

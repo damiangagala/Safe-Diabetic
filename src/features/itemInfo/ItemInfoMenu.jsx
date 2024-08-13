@@ -25,6 +25,7 @@ function ItemInfoMenu({
   itemInfoQuery,
   userQuery,
   open,
+  editRef,
 }) {
   const queryClient = useQueryClient();
 
@@ -90,7 +91,11 @@ function ItemInfoMenu({
       </button>
       {itemInfoQuery.data.author_id === userQuery.data ? (
         <>
-          <button onClick={() => open(true)} className="pr-1 pt-2">
+          <button
+            ref={editRef}
+            onClick={() => open(true)}
+            className="pr-1 pt-2"
+          >
             <FaEdit />
           </button>
           <button className="p1" onClick={handleDelete}>

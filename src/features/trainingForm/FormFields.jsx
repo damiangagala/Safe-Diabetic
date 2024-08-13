@@ -35,6 +35,7 @@ function FormFields({ register, index, day, remove, unit }) {
         <option value="sets">sets</option>
         <option value="minuty">minuty</option>
       </select>
+
       <button type="button" onClick={() => remove(index)}>
         -
       </button>

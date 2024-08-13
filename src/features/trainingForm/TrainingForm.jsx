@@ -4,10 +4,14 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { addTrainingPlan, editTrainingPlan } from "../../services/trainingAPI";
 import toast from "react-hot-toast";
 import { getAuthorId } from "../../services/usersAPI";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { useClickOutside } from "../../hooks/useClickOutside";
 
-function TrainingForm({ close, data, isEdit }) {
+function TrainingForm({ close, data, isEdit, outsideRef }) {
   const [step, setStep] = useState(0);
+  const formRef = useRef(null);
+
+  useClickOutside([formRef, outsideRef], close);
 
   const nextStep = () => {
     setStep((step) => step + 1);
@@ -50,7 +54,7 @@ function TrainingForm({ close, data, isEdit }) {
   if (userQuery.data === null) return;
 
   return (
-    <>
+    <div ref={formRef}>
       <h1 className="m-4 text-center text-3xl">
         {isEdit === true ? "Edytuj trening" : "Nowy trening"}
       </h1>
@@ -160,7 +164,7 @@ function TrainingForm({ close, data, isEdit }) {
           )}
         </div>
       </form>
-    </>
+    </div>
   );
 }
 
