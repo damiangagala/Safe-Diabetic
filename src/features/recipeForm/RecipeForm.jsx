@@ -34,42 +34,47 @@ function RecipeForm({ author, close, data, isEdit }) {
   const { fields, append, remove } = useFormFields("ingredients", control);
 
   return (
-    <form
-      onSubmit={handleSubmit((formData) => {
-        isEdit === true
-          ? edit({ formData, author, id })
-          : create({ formData, author });
-        reset();
-        close(false);
-      })}
-      className="flex flex-col"
-    >
-      <label>Tytuł</label>
-      <input {...register("title")} />
-      <label>Czas przygotowania</label>
-      <input {...register("time")} />
-      <label>Trudność</label>
-      <input {...register("difficulty")} />
-      <label>Opis</label>
-      <input {...register("description")} />
-      <label>Składniki</label>
-      <ul>
-        {fields.map((item, index) => {
-          return (
-            <li key={item.id}>
-              <input {...register(`ingredients.${index}`)} />
-              <button type="button" onClick={() => remove(index)}>
-                -
-              </button>
-            </li>
-          );
+    <>
+      <h1 className="m-4 text-center text-3xl">
+        {isEdit === true ? "Edytuj przepis" : "Nowy przepis"}
+      </h1>
+      <form
+        onSubmit={handleSubmit((formData) => {
+          isEdit === true
+            ? edit({ formData, author, id })
+            : create({ formData, author });
+          reset();
+          close(false);
         })}
-      </ul>
-      <button type="button" onClick={() => append()}>
-        +
-      </button>
-      <button type="submit">Wyślij</button>
-    </form>
+        className="flex flex-col justify-between"
+      >
+        <label>Tytuł</label>
+        <input {...register("title")} />
+        <label>Czas przygotowania</label>
+        <input {...register("time")} />
+        <label>Trudność</label>
+        <input {...register("difficulty")} />
+        <label>Opis</label>
+        <input {...register("description")} />
+        <label>Składniki</label>
+        <ul>
+          {fields.map((item, index) => {
+            return (
+              <li key={item.id}>
+                <input {...register(`ingredients.${index}`)} />
+                <button type="button" onClick={() => remove(index)}>
+                  -
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+        <button type="button" onClick={() => append()}>
+          +
+        </button>
+        <button type="submit">Wyślij</button>
+      </form>
+    </>
   );
 }
 

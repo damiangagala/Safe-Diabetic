@@ -7,10 +7,8 @@ function TrainingInput({ control, day, register, data, isEdit }) {
 
   useEffect(() => {
     if (isEdit === true) {
-      data.map((it) => {
-        console.log(it);
-        const testing = crypto.randomUUID();
-        it.id = testing;
+      data.map((activity) => {
+        activity.id = crypto.randomUUID();
       });
 
       replace(data);
@@ -29,6 +27,7 @@ function TrainingInput({ control, day, register, data, isEdit }) {
                 index={index}
                 day={day}
                 remove={remove}
+                unit={data[index]?.jednostka}
               />
             </li>
           );

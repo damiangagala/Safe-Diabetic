@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-function FormFields({ register, index, day, remove }) {
-  const [select, setSelect] = useState("sets");
+function FormFields({ register, index, day, remove, unit }) {
+  const [select, setSelect] = useState(unit);
 
   return (
     <>
