@@ -12,23 +12,6 @@ function RegistrationForm() {
   } = useForm();
   const navigate = useNavigate();
 
-  // function handleSubmit(e) {
-  //   e.preventDefault();
-
-  //   if (!email.includes("@")) {
-  //     toast.error("Wrong mail!");
-  //     return;
-  //   }
-  //   if (password.length < 6) {
-  //     toast.error("Atleast 6 characters");
-  //     return;
-  //   }
-  //   if (password !== repeatPassword) {
-  //     toast.error("Password doesnt match!");
-  //     return;
-  //   }
-  //   signUp(email, password);
-  // }
   const { mutate: registration, isPending } = useMutation({
     mutationFn: ({ formData }) => signUp(formData.mail, formData.password),
     onSuccess: () => navigate("../login"),

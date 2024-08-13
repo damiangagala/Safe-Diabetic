@@ -15,7 +15,7 @@ function TrainingInput({ control, day, register, data, isEdit }) {
 
       replace(data);
     }
-  }, []);
+  }, [data, isEdit, replace]);
 
   return (
     <div className="mb-4 min-h-[9rem] border-2 border-solid border-white text-center">
