@@ -99,6 +99,7 @@ function ItemInfo() {
             close={setIsOpen}
             data={itemInfoQuery.data}
             isEdit={true}
+            outsideRef={editRef}
           />
         )}
       </Modal>

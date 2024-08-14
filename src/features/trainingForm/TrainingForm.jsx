@@ -4,14 +4,25 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { addTrainingPlan, editTrainingPlan } from "../../services/trainingAPI";
 import toast from "react-hot-toast";
 import { getAuthorId } from "../../services/usersAPI";
-import { useRef, useState } from "react";
-import { useClickOutside } from "../../hooks/useClickOutside";
+import { useEffect, useRef, useState } from "react";
 
 function TrainingForm({ close, data, isEdit, outsideRef }) {
   const [step, setStep] = useState(0);
   const formRef = useRef(null);
 
-  useClickOutside([formRef, outsideRef], close);
+  const handleClickOutside = (e) => {
+    console.log(e.target);
+    if (
+      !formRef.current?.contains(e.target) &&
+      !outsideRef.current?.contains(e.target)
+    )
+      close(false);
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  });
 
   const nextStep = () => {
     setStep((step) => step + 1);

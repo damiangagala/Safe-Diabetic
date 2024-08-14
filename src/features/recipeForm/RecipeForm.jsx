@@ -3,8 +3,25 @@ import { addRecipe, editRecipe } from "../../services/recipesAPI";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { useFormFields } from "../../hooks/useFormFields";
+import { useEffect, useRef } from "react";
 
-function RecipeForm({ author, close, data, isEdit }) {
+function RecipeForm({ author, close, data, isEdit, outsideRef }) {
+  const formRef = useRef(null);
+
+  const handleClickOutside = (e) => {
+    console.log(e.target);
+    if (
+      !formRef.current?.contains(e.target) &&
+      !outsideRef.current?.contains(e.target)
+    )
+      close(false);
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  });
+
   const id = data?.id;
   const queryClient = useQueryClient();
 
@@ -34,7 +51,7 @@ function RecipeForm({ author, close, data, isEdit }) {
   const { fields, append, remove } = useFormFields("ingredients", control);
 
   return (
-    <>
+    <div ref={formRef}>
       <h1 className="m-4 text-center text-3xl">
         {isEdit === true ? "Edytuj przepis" : "Nowy przepis"}
       </h1>
@@ -74,7 +91,7 @@ function RecipeForm({ author, close, data, isEdit }) {
         </button>
         <button type="submit">Wyślij</button>
       </form>
-    </>
+    </div>
   );
 }
 

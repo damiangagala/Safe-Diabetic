@@ -1,7 +1,7 @@
 import { logout } from "../services/usersAPI";
 import { useNavigate } from "react-router-dom";
 import { useGetUser } from "../hooks/useGetUser";
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import Modal from "./itemInfo/Modal";
 import TrainingForm from "./trainingForm/TrainingForm";
 import { SearchContext } from "../contexts/SearchProvider";
@@ -9,7 +9,6 @@ import RecipeForm from "./recipeForm/RecipeForm";
 import { IoMdLogOut } from "react-icons/io";
 import { IoAddCircleOutline } from "react-icons/io5";
 import { MdAccountCircle } from "react-icons/md";
-import { useClickOutside } from "../hooks/useClickOutside";
 
 function BannerMenu() {
   const { isLoading, data, refetch } = useGetUser();
@@ -21,7 +20,14 @@ function BannerMenu() {
   const dropdownRef = useRef(null);
   const createRef = useRef(null);
 
-  // useClickOutside([dropdownRef], setDropdownMenu);
+  const handleClickOutside = (e) => {
+    if (!dropdownRef.current?.contains(e.target)) setDropdownMenu(false);
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
 
   if (isLoading) return <p>Loading...</p>;
 
@@ -65,7 +71,7 @@ function BannerMenu() {
         {activity === "training_plan" ? (
           <TrainingForm close={setOpenModal} outsideRef={createRef} />
         ) : (
-          <RecipeForm close={setOpenModal} />
+          <RecipeForm close={setOpenModal} outsideRef={createRef} />
         )}
       </Modal>
     </div>
