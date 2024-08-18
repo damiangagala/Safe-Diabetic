@@ -40,8 +40,8 @@ function ItemInfo() {
   if (itemInfoQuery.isLoading || userQuery.isLoading) return <p>Loading...</p>;
 
   return (
-    <section className="flex-column relative basis-4/6 flex-wrap ">
-      <div className="h-28 basis-2/12 rounded-t-xl bg-emerald-800 text-center  text-zinc-100">
+    <section className="relative flex basis-4/6 flex-col">
+      <div className="basis-1/6 rounded-t-xl bg-emerald-800 text-center text-zinc-100">
         <h1 className="pt-9 text-3xl font-bold">{itemInfoQuery.data.title}</h1>
         {userQuery.data !== null ? (
           <ItemInfoMenu
@@ -56,12 +56,10 @@ function ItemInfo() {
           />
         ) : null}
       </div>
-      <div className="flex bg-zinc-50">
-        <div className="h-96 basis-[70%] p-4">
-          {itemInfoQuery.data.description}
-        </div>
+      <div className="flex shrink-0 basis-1/2 bg-zinc-50">
+        <div className="basis-[70%] p-4">{itemInfoQuery.data.description}</div>
         {activity === "recipes" ? (
-          <div className="basis-[30%] border-l-2  border-solid  border-[#DFE2DB] p-3">
+          <div className="basis-[30%] border-l-2 border-solid  border-[#DFE2DB] p-3">
             <h1 className="mb-4 text-center text-[1.7rem]">Składniki</h1>
             <ul>
               {itemInfoQuery.data.ingredients.map((item) => (
@@ -76,7 +74,7 @@ function ItemInfo() {
           </div>
         ) : null}
       </div>
-      <div className="basis-4/12 text-center">
+      <div className=" basis-1/3  text-center">
         {activity === "training_plan" ? (
           <Calendar week={itemInfoQuery.data.training_week} />
         ) : (
@@ -87,7 +85,6 @@ function ItemInfo() {
       <Modal open={isOpen} onClose={setIsOpen}>
         {activity === "training_plan" ? (
           <TrainingForm
-            author={userQuery.data}
             close={setIsOpen}
             data={itemInfoQuery.data}
             isEdit={true}
@@ -95,7 +92,6 @@ function ItemInfo() {
           />
         ) : (
           <RecipeForm
-            author={userQuery.data}
             close={setIsOpen}
             data={itemInfoQuery.data}
             isEdit={true}

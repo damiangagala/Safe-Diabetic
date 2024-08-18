@@ -43,7 +43,6 @@ export async function getLikedTrainings(id) {
   `,
     )
     .eq("user_id", id);
-  //walnij tutaj dodatkową tabele w select?
 
   if (error) throw new Error("Wystąpił problem z załadowaniem danych!");
   return data;

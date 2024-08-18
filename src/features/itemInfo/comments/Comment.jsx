@@ -13,7 +13,7 @@ function Comment({ commentText, info, commentId }) {
   if (isLoading) return;
 
   return (
-    <li className="relative min-h-min border-b-2 border-zinc-400 bg-zinc-100 p-2 text-left first:border-t-2">
+    <li className="relative  border-b-2 border-zinc-400 bg-zinc-100 p-2 text-left first:border-t-2">
       {info.user_id === data?.id ? (
         <button
           onClick={() => deleteComment(commentId)}

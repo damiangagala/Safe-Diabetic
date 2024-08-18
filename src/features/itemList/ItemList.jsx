@@ -36,14 +36,14 @@ function ItemList() {
 
   if (itemQuery.isLoading || userQuery.isLoading)
     return (
-      <div className="min-h-[50rem] rounded-b-sm  p-[0.3rem] text-white">
+      <div className="rounded-b-sm  p-[0.3rem] text-white">
         <p>Loading</p>
       </div>
     );
 
   if (itemQuery.error)
     return (
-      <div className="min-h-[40rem] rounded-b-sm bg-sky-950 p-[0.3rem] text-white">
+      <div className=" rounded-b-sm bg-sky-950 p-[0.3rem] text-white">
         <p>{itemQuery.error.message}</p>
       </div>
     );

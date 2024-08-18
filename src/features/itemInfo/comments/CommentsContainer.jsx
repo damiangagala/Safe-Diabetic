@@ -36,7 +36,7 @@ function CommentsContainer() {
   }
 
   return (
-    <ul className="overlow-scroll bg-zinc-100">
+    <ul className="h-full  bg-zinc-100">
       {authorId !== null && (
         <form onSubmit={(e) => handleSubmit(e)}>
           <input

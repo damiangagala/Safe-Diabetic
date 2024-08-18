@@ -1,15 +1,15 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { addRecipe, editRecipe } from "../../services/recipesAPI";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { useFormFields } from "../../hooks/useFormFields";
 import { useEffect, useRef } from "react";
+import { getAuthorId } from "../../services/usersAPI";
 
-function RecipeForm({ author, close, data, isEdit, outsideRef }) {
+function RecipeForm({ close, data, isEdit, outsideRef }) {
   const formRef = useRef(null);
 
   const handleClickOutside = (e) => {
-    console.log(e.target);
     if (
       !formRef.current?.contains(e.target) &&
       !outsideRef.current?.contains(e.target)
@@ -24,9 +24,16 @@ function RecipeForm({ author, close, data, isEdit, outsideRef }) {
 
   const id = data?.id;
   const queryClient = useQueryClient();
+  const userQuery = useQuery({
+    queryKey: ["loggedProfile"],
+    queryFn: getAuthorId,
+  });
+  const author = userQuery?.data;
 
   const { mutate: create } = useMutation({
-    mutationFn: ({ data, author }) => addRecipe(data, author),
+    mutationFn: ({ formData, author }) => {
+      addRecipe(formData, author);
+    },
     onSuccess: () => toast.success("Dodano przepis"),
   });
 

@@ -4,6 +4,7 @@ import FormFields from "./FormFields";
 
 function TrainingInput({ control, day, register, data, isEdit }) {
   const { fields, append, remove, replace } = useFormFields(day, control);
+  console.log(data);
 
   useEffect(() => {
     if (isEdit === true) {
@@ -16,7 +17,7 @@ function TrainingInput({ control, day, register, data, isEdit }) {
   }, [data, isEdit, replace]);
 
   return (
-    <div className="mb-4 min-h-[9rem] border-2 border-solid border-white text-center">
+    <div className="mb-4  border-2 border-solid border-white text-center">
       <h3>{day}</h3>
       <ul className="flex flex-col">
         {fields.map((item, index) => {
@@ -27,7 +28,7 @@ function TrainingInput({ control, day, register, data, isEdit }) {
                 index={index}
                 day={day}
                 remove={remove}
-                unit={data[index]?.jednostka}
+                unit={data ? data[index]?.jednostka : "minuty"}
               />
             </li>
           );

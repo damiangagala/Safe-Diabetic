@@ -11,7 +11,6 @@ function TrainingForm({ close, data, isEdit, outsideRef }) {
   const formRef = useRef(null);
 
   const handleClickOutside = (e) => {
-    console.log(e.target);
     if (
       !formRef.current?.contains(e.target) &&
       !outsideRef.current?.contains(e.target)
@@ -25,7 +24,7 @@ function TrainingForm({ close, data, isEdit, outsideRef }) {
   });
 
   const nextStep = () => {
-    setStep((step) => step + 1);
+    setStep((s) => s + 1);
   };
 
   const userQuery = useQuery({
@@ -162,17 +161,13 @@ function TrainingForm({ close, data, isEdit, outsideRef }) {
             isEdit={isEdit}
           />
         )}
+
+        <button type="button" onClick={nextStep}>
+          Dalej
+        </button>
+
         <div className="mx-auto flex flex-col gap-2">
-          {step === 7 && (
-            <button type="submit">
-              {isEdit === true ? "Edytuj" : "Dodaj"}
-            </button>
-          )}
-          {step !== 7 && (
-            <button type="button" onClick={nextStep}>
-              Dalej
-            </button>
-          )}
+          <button type="submit">{isEdit === true ? "Edytuj" : "Dodaj"}</button>
         </div>
       </form>
     </div>

@@ -96,6 +96,7 @@ export async function addRecipeLike({ userId, itemId }) {
 }
 
 export async function addRecipe(data, author) {
+  console.log(data);
   const { error } = await supabase.from("recipes").insert([
     {
       title: data.title,
