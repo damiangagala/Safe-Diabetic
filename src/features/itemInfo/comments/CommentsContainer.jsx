@@ -44,7 +44,7 @@ function CommentsContainer() {
             onChange={(e) => setNewComment(e.target.value)}
             type="text"
             placeholder="Dodaj komentarz..."
-            className="mt-2 h-10 w-full px-2"
+            className="mt-2 h-10 w-full p-1 px-2"
           ></input>
         </form>
       )}

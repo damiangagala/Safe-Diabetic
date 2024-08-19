@@ -35,9 +35,9 @@ function Item({ item, author, activity, fav }) {
             size={16}
             className="ml-6 mt-1"
             color={
-              diff === "hard"
+              diff === "Trudny"
                 ? "#b91c1c"
-                : diff === "easy"
+                : diff === "Łatwy"
                   ? "green"
                   : "#eab308"
             }

@@ -5,6 +5,10 @@ import { useForm } from "react-hook-form";
 import { useFormFields } from "../../hooks/useFormFields";
 import { useEffect, useRef } from "react";
 import { getAuthorId } from "../../services/usersAPI";
+import {
+  IoIosAddCircleOutline,
+  IoIosRemoveCircleOutline,
+} from "react-icons/io";
 
 function RecipeForm({ close, data, isEdit, outsideRef }) {
   const formRef = useRef(null);
@@ -57,11 +61,32 @@ function RecipeForm({ close, data, isEdit, outsideRef }) {
 
   const { fields, append, remove } = useFormFields("ingredients", control);
 
+  const ulRef = useRef(null);
+
+  const handleAdd = () => {
+    append();
+
+    setTimeout(() => {
+      if (ulRef.current) {
+        const lastChild = ulRef.current.lastElementChild;
+        if (lastChild) {
+          lastChild.scrollIntoView({ behavior: "smooth" });
+        }
+      }
+    }, 0);
+  };
+
+  function handleRemove(index, e) {
+    e.stopPropagation();
+    remove(index);
+  }
+
   return (
     <div ref={formRef}>
-      <h1 className="m-4 text-center text-3xl">
+      <h1 className="m-4 text-center text-4xl font-bold">
         {isEdit === true ? "Edytuj przepis" : "Nowy przepis"}
       </h1>
+
       <form
         onSubmit={handleSubmit((formData) => {
           isEdit === true
@@ -70,33 +95,69 @@ function RecipeForm({ close, data, isEdit, outsideRef }) {
           reset();
           close(false);
         })}
-        className="flex flex-col justify-between"
+        className="flex flex-col justify-between "
       >
-        <label>Tytuł</label>
-        <input {...register("title")} />
-        <label>Czas przygotowania</label>
-        <input {...register("time")} />
-        <label>Trudność</label>
-        <input {...register("difficulty")} />
-        <label>Opis</label>
-        <input {...register("description")} />
-        <label>Składniki</label>
-        <ul>
+        <label className="p-1 text-lg font-bold">Tytuł</label>
+        <input
+          className="mb-2 rounded-md p-1 text-emerald-900"
+          {...register("title")}
+        />
+        <label className="text-lg font-bold">Opis</label>
+        <textarea
+          className="mb-2 h-[5em]  text-wrap rounded-md p-1 text-emerald-900"
+          {...register("description")}
+        />
+        <label className="text-lg font-bold">Czas</label>
+        <input
+          type="number"
+          min={0}
+          defaultValue={0}
+          className="mb-2 rounded-md p-1 text-emerald-900"
+          {...register("time")}
+        />
+        <label className="text-lg font-bold">Trudność</label>
+        <select
+          className="mb-4 rounded-md p-1 text-emerald-900"
+          {...register("difficulty")}
+        >
+          <option>Łatwy</option>
+          <option>Średni</option>
+          <option>Trudny</option>
+        </select>
+        <ul
+          ref={ulRef}
+          className="scrollbar flex max-h-[150px] flex-col overflow-auto"
+        >
           {fields.map((item, index) => {
             return (
-              <li key={item.id}>
-                <input {...register(`ingredients.${index}`)} />
-                <button type="button" onClick={() => remove(index)}>
-                  -
+              <li
+                className="m-2 mx-auto flex justify-center gap-1"
+                key={item.id}
+              >
+                <input
+                  className="w-50 rounded-md p-1 text-emerald-900"
+                  {...register(`ingredients.${index}`)}
+                />
+                <button type="button" onClick={(e) => handleRemove(index, e)}>
+                  <IoIosRemoveCircleOutline size={20} />
                 </button>
               </li>
             );
           })}
         </ul>
-        <button type="button" onClick={() => append()}>
-          +
+        <button
+          className="mx-auto mt-1 "
+          type="button"
+          onClick={() => handleAdd()}
+        >
+          <IoIosAddCircleOutline size={25} />
         </button>
-        <button type="submit">Wyślij</button>
+        <button
+          className="mx-auto mt-4 rounded-xl bg-[#6699cc] px-6 py-1 font-bold text-zinc-50"
+          type="submit"
+        >
+          {isEdit === true ? "Edytuj" : "Dodaj"}
+        </button>
       </form>
     </div>
   );

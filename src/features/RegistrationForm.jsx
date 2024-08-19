@@ -10,6 +10,7 @@ function RegistrationForm() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
   const navigate = useNavigate();
 
   const { mutate: registration, isPending } = useMutation({
