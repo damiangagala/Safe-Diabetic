@@ -29,8 +29,6 @@ function BannerMenu() {
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
-  if (isLoading) return <p>Loading...</p>;
-
   async function handleLogin() {
     if (data !== null) {
       logout();
@@ -47,20 +45,20 @@ function BannerMenu() {
       </span>
 
       {dropdownMenu && (
-        <ul className=" absolute right-0 top-14 z-10 rounded-md border-2 border-zinc-100 bg-emerald-800 px-2 py-1">
+        <ul className=" absolute right-0 top-14 z-10 rounded-md bg-zinc-50 px-2 py-1">
           <li className="cursor-pointer ">
             <span
               ref={createRef}
-              className="flex gap-2 p-1 font-bold text-zinc-50"
+              className="flex gap-2 p-1 font-bold text-emerald-800"
               onClick={() => setOpenModal(!openModal)}
             >
-              <IoAddCircleOutline size={25} color="white" />
+              <IoAddCircleOutline size={25} color="#065f46  " />
               Dodaj
             </span>
           </li>
           <li className="cursor-pointer ">
-            <span className="flex gap-2 p-1 font-bold text-zinc-50">
-              <IoMdLogOut size={25} onClick={handleLogin} />
+            <span className="flex gap-2 p-1 font-bold text-emerald-800">
+              <IoMdLogOut color="#065f46 " size={25} onClick={handleLogin} />
               Wyloguj
             </span>
           </li>

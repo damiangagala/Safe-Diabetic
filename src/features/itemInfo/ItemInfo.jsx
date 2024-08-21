@@ -11,6 +11,7 @@ import Modal from "./Modal";
 import RecipeForm from "../recipeForm/RecipeForm";
 import TrainingForm from "../trainingForm/TrainingForm";
 import ItemInfoMenu from "./ItemInfoMenu";
+import LoadSpinner from "../../ui/LoadSpinner";
 
 function ItemInfo() {
   const { id } = useParams();
@@ -37,7 +38,8 @@ function ItemInfo() {
   const itemId = itemInfoQuery.data?.id;
 
   if (id === undefined) return;
-  if (itemInfoQuery.isLoading || userQuery.isLoading) return <p>Loading...</p>;
+  if (itemInfoQuery.isLoading || userQuery.isLoading)
+    return <LoadSpinner color={"white"} size={"5rem"} thickness={"8px"} />;
 
   return (
     <section className="relative flex basis-4/6 flex-col">

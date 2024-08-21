@@ -5,6 +5,7 @@ import { getRecipesItemListData } from "../../services/recipesAPI";
 import { useContext } from "react";
 import { SearchContext } from "../../contexts/SearchProvider";
 import { getAuthorId } from "../../services/usersAPI";
+import LoadSpinner from "../../ui/LoadSpinner";
 
 function ItemList() {
   const { searchParams } = useContext(SearchContext);
@@ -36,8 +37,8 @@ function ItemList() {
 
   if (itemQuery.isLoading || userQuery.isLoading)
     return (
-      <div className="rounded-b-sm  p-[0.3rem] text-white">
-        <p>Loading</p>
+      <div className="flex h-full">
+        <LoadSpinner color={"#065f46"} size={"3rem"} thickness={"8px"} />
       </div>
     );
 

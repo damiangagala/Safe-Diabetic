@@ -7,6 +7,7 @@ import { getAuthorId } from "../../../services/usersAPI";
 import { useParams } from "react-router-dom";
 import Comment from "./Comment";
 import { useState } from "react";
+import LoadSpinner from "../../../ui/LoadSpinner";
 
 function CommentsContainer() {
   const { id: recipeId } = useParams();
@@ -27,7 +28,12 @@ function CommentsContainer() {
     queryFn: () => getAuthorId(),
   });
 
-  if (commentsQuery.isLoading || authorIsLoading) return;
+  if (commentsQuery.isLoading || authorIsLoading)
+    return (
+      <div className="flex h-full bg-zinc-100">
+        <LoadSpinner color={"#065f46"} size={"3rem"} thickness={"8px"} />
+      </div>
+    );
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -36,7 +42,7 @@ function CommentsContainer() {
   }
 
   return (
-    <ul className="h-full  bg-zinc-100">
+    <ul className=" bg-zinc-100 py-2">
       {authorId !== null && (
         <form onSubmit={(e) => handleSubmit(e)}>
           <input
@@ -44,7 +50,7 @@ function CommentsContainer() {
             onChange={(e) => setNewComment(e.target.value)}
             type="text"
             placeholder="Dodaj komentarz..."
-            className="mt-2 h-10 w-full p-1 px-2"
+            className=" h-10 w-full p-1 px-2"
           ></input>
         </form>
       )}
