@@ -11,7 +11,7 @@ import { IoAddCircleOutline } from "react-icons/io5";
 import { MdAccountCircle } from "react-icons/md";
 
 function BannerMenu() {
-  const { isLoading, data, refetch } = useGetUser();
+  const { data, refetch } = useGetUser();
   const [openModal, setOpenModal] = useState(false);
   const [dropdownMenu, setDropdownMenu] = useState(false);
   const navigate = useNavigate();

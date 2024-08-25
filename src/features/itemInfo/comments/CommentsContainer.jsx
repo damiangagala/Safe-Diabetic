@@ -42,7 +42,7 @@ function CommentsContainer() {
   }
 
   return (
-    <ul className=" bg-zinc-100 py-2">
+    <ul className=" bg-zinc-100">
       {authorId !== null && (
         <form onSubmit={(e) => handleSubmit(e)}>
           <input
@@ -50,7 +50,7 @@ function CommentsContainer() {
             onChange={(e) => setNewComment(e.target.value)}
             type="text"
             placeholder="Dodaj komentarz..."
-            className=" h-10 w-full p-1 px-2"
+            className="h-10 w-full p-2"
           ></input>
         </form>
       )}

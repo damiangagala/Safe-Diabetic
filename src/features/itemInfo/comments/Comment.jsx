@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useGetUser } from "../../../hooks/useGetUser";
 import { deleteRecipeComment } from "../../../services/recipesAPI";
+import { FaTrash } from "react-icons/fa";
 
 function Comment({ commentText, info, commentId }) {
   const { data, isLoading } = useGetUser();
@@ -13,17 +14,17 @@ function Comment({ commentText, info, commentId }) {
   if (isLoading) return;
 
   return (
-    <li className="relative  border-b-2 border-zinc-400 bg-zinc-100 p-2 text-left first:border-t-2">
+    <li className="flex flex-nowrap justify-between border-b-2 border-zinc-400 bg-zinc-100 p-2 text-left first:border-t-2">
+      <div>
+        <p>{commentText}</p>
+        <span className="text-xs">{info.username}</span>
+      </div>
+
       {info.user_id === data?.id ? (
-        <button
-          onClick={() => deleteComment(commentId)}
-          className="absolute right-2 top-1"
-        >
-          X
+        <button onClick={() => deleteComment(commentId)} className="">
+          <FaTrash size={14} />
         </button>
       ) : null}
-      <p>{commentText}</p>
-      <span className="text-xs">{info.username}</span>
     </li>
   );
 }
