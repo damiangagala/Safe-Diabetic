@@ -17,9 +17,9 @@ function Item({ item, author, activity, fav }) {
   return (
     <div
       onClick={handleClick}
-      className="m-1 flex cursor-pointer items-center border-b-2 border-solid border-zinc-300 p-2 text-black last:border-0 "
+      className="m-1 flex w-64 cursor-pointer items-center justify-between gap-2 border-b-2 border-solid border-zinc-300 p-2 text-black last:border-0 lg:w-full "
     >
-      <div className="text-md basis-[70%] truncate ">
+      <div className="text-md basis-[70%]">
         <h3 className="font-bold text-teal-900">
           {fav === "false"
             ? item.title.toUpperCase()

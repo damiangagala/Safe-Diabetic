@@ -2,7 +2,7 @@ import CalendarDay from "./CalendarDay";
 
 function Calendar({ week }) {
   return (
-    <div className="flex h-full rounded-b-md bg-zinc-200">
+    <div className="flex h-full flex-col rounded-b-md bg-zinc-200 lg:flex-row">
       <CalendarDay item={week.monday} day={"Poniedziałek"} />
       <CalendarDay item={week.tuesday} day={"Wtorek"} />
       <CalendarDay item={week.wednesday} day={"Środa"} />

@@ -39,10 +39,14 @@ function ItemInfo() {
 
   if (id === undefined) return;
   if (itemInfoQuery.isLoading || userQuery.isLoading)
-    return <LoadSpinner color={"white"} size={"5rem"} thickness={"8px"} />;
+    return (
+      <div className="flex  h-[70vh]  w-full content-center items-center lg:basis-4/6">
+        <LoadSpinner color={"white"} size={"5rem"} thickness={"8px"} />;
+      </div>
+    );
 
   return (
-    <section className="relative flex basis-4/6 flex-col">
+    <section className="relative flex h-[70vh] w-full flex-col  lg:basis-4/6">
       <div className="basis-1/6 rounded-t-xl bg-emerald-800 text-center text-zinc-100">
         <h1 className="pt-9 text-3xl font-bold">{itemInfoQuery.data.title}</h1>
         {userQuery.data !== null ? (
@@ -59,14 +63,18 @@ function ItemInfo() {
         ) : null}
       </div>
       <div className="flex shrink-0 basis-1/2 bg-zinc-50">
-        <div className="basis-[70%] p-4">{itemInfoQuery.data.description}</div>
+        <div className="basis-[70%] p-4 text-sm sm:text-base">
+          {itemInfoQuery.data.description}
+        </div>
         {activity === "recipes" ? (
           <div className="basis-[30%] border-l-2 border-solid  border-[#DFE2DB] p-3">
-            <h1 className="mb-4 text-center text-[1.7rem]">Składniki</h1>
+            <h1 className="mb-4 text-center text-lg lg:text-[1.7rem]">
+              Składniki
+            </h1>
             <ul>
               {itemInfoQuery.data.ingredients.map((item) => (
                 <li
-                  className="mb-2 ml-4 list-disc"
+                  className="mb-2 ml-4 list-disc text-sm"
                   key={itemInfoQuery.data.ingredients.indexOf(item)}
                 >
                   {item}

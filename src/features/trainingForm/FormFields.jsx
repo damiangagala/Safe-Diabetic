@@ -12,7 +12,7 @@ function FormFields({ register, index, day, remove, unit }) {
   return (
     <>
       <input
-        className=" w-32 rounded-md p-1 text-emerald-900"
+        className="w-42 rounded-md p-1 text-emerald-900 md:w-28"
         placeholder="ćwiczenie"
         {...register(`${day}.${index}.name`)}
       />
@@ -40,7 +40,7 @@ function FormFields({ register, index, day, remove, unit }) {
         {...register(`${day}.${index}.jednostka`)}
         value={select}
         onChange={(e) => setSelect(e.target.value)}
-        className=" w-26 rounded-md p-1 text-emerald-900"
+        className="w-32 rounded-md p-1 text-emerald-900 lg:w-24"
       >
         <option value="sets">serie</option>
         <option value="minuty">minuty</option>

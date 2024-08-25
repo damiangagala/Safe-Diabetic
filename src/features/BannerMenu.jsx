@@ -41,7 +41,10 @@ function BannerMenu() {
   return (
     <div className="absolute right-4 top-4 flex basis-1/4 cursor-pointer gap-6 ">
       <span ref={dropdownRef} onClick={() => setDropdownMenu(!dropdownMenu)}>
-        <MdAccountCircle size={51} color="white" />
+        <MdAccountCircle
+          size={window.innerWidth === 375 ? 42 : 51}
+          color="white"
+        />
       </span>
 
       {dropdownMenu && (

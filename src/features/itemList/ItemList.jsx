@@ -29,7 +29,7 @@ function ItemList() {
 
   if (itemQuery.isLoading || userQuery.isLoading)
     return (
-      <div className="flex h-full">
+      <div className="flex h-full content-center items-center">
         <LoadSpinner color={"#065f46"} size={"3rem"} thickness={"8px"} />
       </div>
     );

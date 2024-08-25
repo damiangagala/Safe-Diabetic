@@ -22,7 +22,10 @@ function TrainingInput({ control, day, register, data, isEdit }) {
       <ul className="flex flex-col">
         {fields.map((item, index) => {
           return (
-            <li className="m-2 flex justify-center gap-2" key={item.id}>
+            <li
+              className="m-2 flex flex-col items-center gap-2 rounded-lg border-2 border-zinc-50 py-2 md:flex-row md:justify-center md:border-none"
+              key={item.id}
+            >
               <FormFields
                 register={register}
                 index={index}

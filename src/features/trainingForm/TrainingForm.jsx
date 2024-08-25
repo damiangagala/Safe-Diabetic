@@ -9,6 +9,15 @@ import { useEffect, useRef, useState } from "react";
 function TrainingForm({ close, data, isEdit, outsideRef }) {
   const [step, setStep] = useState(0);
   const formRef = useRef(null);
+  const daysOfWeek = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ];
 
   const handleClickOutside = (e) => {
     if (
@@ -108,75 +117,18 @@ function TrainingForm({ close, data, isEdit, outsideRef }) {
               </select>
             </div>
           )}
-          {step === 1 && (
-            <TrainingInput
-              key={0}
-              control={control}
-              day={"Poniedziałek"}
-              data={data?.training_week["monday"]}
-              register={register}
-              isEdit={isEdit}
-            />
-          )}
-          {step === 2 && (
-            <TrainingInput
-              key={1}
-              control={control}
-              day={"Wtorek"}
-              data={data?.training_week["tuesday"]}
-              register={register}
-              isEdit={isEdit}
-            />
-          )}
-          {step === 3 && (
-            <TrainingInput
-              key={2}
-              control={control}
-              day={"Środa"}
-              data={data?.training_week["wednesday"]}
-              register={register}
-              isEdit={isEdit}
-            />
-          )}
-          {step === 4 && (
-            <TrainingInput
-              key={3}
-              control={control}
-              day={"Czwartek"}
-              data={data?.training_week["thursday"]}
-              register={register}
-              isEdit={isEdit}
-            />
-          )}
-          {step === 5 && (
-            <TrainingInput
-              key={4}
-              control={control}
-              day={"Piątek"}
-              data={data?.training_week["friday"]}
-              register={register}
-              isEdit={isEdit}
-            />
-          )}
-          {step === 6 && (
-            <TrainingInput
-              key={5}
-              control={control}
-              day={"Sobota"}
-              data={data?.training_week["saturday"]}
-              register={register}
-              isEdit={isEdit}
-            />
-          )}
-          {step === 7 && (
-            <TrainingInput
-              key={6}
-              control={control}
-              day={"Niedziela"}
-              data={data?.training_week["sunday"]}
-              register={register}
-              isEdit={isEdit}
-            />
+          {daysOfWeek.map(
+            (day, index) =>
+              step === index + 1 && (
+                <TrainingInput
+                  key={index}
+                  day={day}
+                  control={control}
+                  data={data?.training_week[day]}
+                  register={register}
+                  isEdit={isEdit}
+                />
+              ),
           )}
         </div>
         <div className="flex flex-col gap-5">
