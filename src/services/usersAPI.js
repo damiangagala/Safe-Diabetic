@@ -10,7 +10,6 @@ export async function login({ email, password }) {
 }
 
 export async function signUp(mail, pswd) {
-  console.log(mail, pswd);
   let { error } = await supabase.auth.signUp({
     email: mail,
     password: pswd,

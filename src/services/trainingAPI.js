@@ -8,7 +8,7 @@ export async function getTrainingPlanData() {
       )
     `);
 
-  if (error) throw new Error("Nie można załadować planów treningowych.");
+  if (error) throw new Error("Nie udało się załadować planów treningowych.");
   return data;
 }
 
@@ -29,11 +29,10 @@ export async function getTrainingItem(id) {
 }
 
 export async function getLikedTrainings(id) {
-  let { data, error } = await supabase
+  let { data: likeData, error: likeError } = await supabase
     .from("training_likes")
     .select(
       `
-        
     training_plan(
       id,time,difficulty,title
     ),
@@ -44,7 +43,22 @@ export async function getLikedTrainings(id) {
     )
     .eq("user_id", id);
 
-  if (error) throw new Error("Wystąpił problem z załadowaniem danych!");
+  let { data: userData, error: userError } = await supabase
+    .from("training_plan")
+    .select(
+      `
+    id, time, difficulty, title,
+    profiles(
+      username
+      )
+  `,
+    )
+    .eq("author_id", id);
+
+  if (likeError || userError)
+    throw new Error("Wystąpił problem z załadowaniem danych!");
+
+  let data = likeData.concat(userData);
   return data;
 }
 

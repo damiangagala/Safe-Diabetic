@@ -1,23 +1,27 @@
 import supabase from "./supabaseConnect";
 
 export async function getRecipesData() {
-  let { data } = await supabase.from("recipes").select(`
+  let { data, error } = await supabase.from("recipes").select(`
     *,
     profiles(
       username)
       `);
 
+  if (error) throw new Error("Nie udało się załadować przepisów.");
+
   return data;
 }
 
 export async function getRecipeItem(id) {
-  let { data } = await supabase.from("recipes").select("*").eq("id", id);
+  let { data, error } = await supabase.from("recipes").select("*").eq("id", id);
+
+  if (error) throw new Error("Nie udało się załadować przepisu.");
 
   return data[0];
 }
 
 export async function getLikedRecipes(id) {
-  let { data } = await supabase
+  let { data: likeData, error: likeError } = await supabase
     .from("recipes_likes")
     .select(
       `
@@ -30,6 +34,16 @@ export async function getLikedRecipes(id) {
   `,
     )
     .eq("user_id", id);
+
+  let { data: userData, error: userError } = await supabase
+    .from("recipes")
+    .select(`id,time,difficulty,title,profiles(username)`)
+    .eq("author_id", id);
+
+  if (likeError || userError)
+    throw new Error("Wystąpił problem z załadowaniem danych!");
+
+  let data = likeData.concat(userData);
 
   return data;
 }
@@ -96,7 +110,6 @@ export async function addRecipeLike({ userId, itemId }) {
 }
 
 export async function addRecipe(data, author) {
-  console.log(data);
   const { error } = await supabase.from("recipes").insert([
     {
       title: data.title,

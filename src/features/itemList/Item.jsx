@@ -5,11 +5,12 @@ import { LuClock } from "react-icons/lu";
 function Item({ item, author, activity, fav }) {
   const navigate = useNavigate();
   const { search } = useLocation();
-  const diff = fav === "false" ? item.difficulty : item[activity].difficulty;
+  const activityItem = item[activity] || item;
+  const diff = fav === "false" ? item.difficulty : activityItem.difficulty;
 
   function handleClick() {
     fav === "true"
-      ? navigate(`/${item[activity].id}${search}`)
+      ? navigate(`/${activityItem.id}${search}`)
       : navigate(`/${item.id}${search}`);
   }
 
@@ -20,12 +21,14 @@ function Item({ item, author, activity, fav }) {
     >
       <div className="text-md basis-[70%] truncate ">
         <h3 className="font-bold text-teal-900">
-          {fav === "false" ? item.title.toUpperCase() : item[activity].title}
+          {fav === "false"
+            ? item.title.toUpperCase()
+            : activityItem.title.toUpperCase()}
         </h3>
         <p className="text-xs">{author.username}</p>
       </div>
       <div className="flex basis-[30%] justify-center  p-1">
-        <span>{fav === "false" ? item.time : item[activity].time}</span>
+        <span>{fav === "false" ? item.time : activityItem.time}</span>
         <span>
           <LuClock size={15} className="ml-[.2rem] mt-[.3rem]" />
         </span>
@@ -49,4 +52,3 @@ function Item({ item, author, activity, fav }) {
 }
 
 export default Item;
-// {fav === "false" ? item.difficulty : item[activity].difficulty}
