@@ -109,19 +109,6 @@ export async function addRecipeLike({ userId, itemId }) {
   if (error) throw new Error("Nie udało się polubić przepisu.");
 }
 
-export async function checkIfOwnedRecipe(userId, recipeId) {
-  let { data, error } = await supabase
-    .from("recipes")
-    .select("id")
-    .eq("author_id", userId)
-    .eq("id", recipeId);
-
-  if (error) throw new Error("Problem z pobraniem danych.");
-
-  if (data.length !== 0) return true;
-  return false;
-}
-
 export async function addRecipe(data, author) {
   const { error } = await supabase.from("recipes").insert([
     {

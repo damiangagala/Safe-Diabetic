@@ -6,14 +6,12 @@ import toast from "react-hot-toast";
 import {
   addTrainingLike,
   checkIfLikedTraining,
-  checkIfOwnedTraining,
   deleteLikeTraining,
   deleteTrainingPlan,
 } from "../../services/trainingAPI";
 import {
   addRecipeLike,
   checkIfLikedRecipe,
-  checkIfOwnedRecipe,
   deleteRecipe,
   deleteRecipeLike,
 } from "../../services/recipesAPI";
@@ -38,14 +36,6 @@ function ItemInfoMenu({
         ? checkIfLikedTraining(userId, itemId)
         : checkIfLikedRecipe(userId, itemId),
     enabled: !!itemId && !!userId,
-  });
-
-  const checkOwn = useQuery({
-    queryKey: ["checkOwn", userId, itemId],
-    queryFn: () =>
-      activity === "training_plan"
-        ? checkIfOwnedTraining(userId, itemId)
-        : checkIfOwnedRecipe(userId, itemId),
   });
 
   const { mutate: deleteItem } = useMutation({
@@ -86,21 +76,7 @@ function ItemInfoMenu({
 
   return (
     <div>
-      <button
-        className="pr-1 pt-2"
-        onClick={handleLike}
-        disabled={addLikePending || deleteLikePending}
-      >
-        {!checkOwn.data && (
-          <FaStar
-            color={
-              checkLike.data === false || checkLike.data === undefined
-                ? "gray"
-                : "yellow"
-            }
-          />
-        )}
-      </button>
+      <button></button>
       {itemInfoQuery.data.author_id === userQuery.data ? (
         <>
           <button
@@ -114,7 +90,21 @@ function ItemInfoMenu({
             <FaTrash />
           </button>
         </>
-      ) : null}
+      ) : (
+        <button
+          className="pr-1 pt-2"
+          onClick={handleLike}
+          disabled={addLikePending || deleteLikePending}
+        >
+          <FaStar
+            color={
+              checkLike.data === false || checkLike.data === undefined
+                ? "gray"
+                : "yellow"
+            }
+          />
+        </button>
+      )}
     </div>
   );
 }

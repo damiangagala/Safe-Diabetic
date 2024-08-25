@@ -75,19 +75,6 @@ export async function checkIfLikedTraining(userId, trainingId) {
   return false;
 }
 
-export async function checkIfOwnedTraining(userId, trainingId) {
-  let { data, error } = await supabase
-    .from("training_plan")
-    .select("id")
-    .eq("author_id", userId)
-    .eq("id", trainingId);
-
-  if (error) throw new Error("Problem z pobraniem danych.");
-
-  if (data.length !== 0) return true;
-  return false;
-}
-
 export async function getTrainingItemListData(fav, id) {
   if (fav === "false") {
     return getTrainingPlanData();
