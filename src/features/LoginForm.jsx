@@ -1,15 +1,17 @@
 import { useNavigate } from "react-router-dom";
-import { login as loginAPI } from "../services/usersAPI";
+import { getUser, login as loginAPI } from "../services/usersAPI";
 import { useState } from "react";
-import { useGetUser } from "../hooks/useGetUser";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 function LoginForm() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { isLoading } = useGetUser();
+  const { isLoading } = useQuery({
+    queryKey: ["user"],
+    queryFn: getUser,
+  });
 
   const { mutate: login } = useMutation({
     mutationFn: loginAPI,
@@ -27,11 +29,11 @@ function LoginForm() {
     login({ email, password });
   }
   return (
-    <div className="mx-auto flex w-fit">
-      <div className=" my-48 flex w-fit flex-col items-center  rounded-md rounded-r-none bg-zinc-200 p-20 pb-0">
+    <div className="mx-auto flex h-full w-[90%]  items-center justify-center">
+      <div className="flex h-[30rem] w-96 flex-col items-center justify-center rounded-md bg-zinc-200  lg:rounded-r-none ">
         <h1 className="p-9 text-center text-5xl">Logowanie</h1>
         <form
-          className="m-10 flex w-80 flex-col items-center pb-20 "
+          className="my-10 flex w-80 flex-col items-center pb-20 "
           onSubmit={(e) => handleSubmit(e)}
         >
           <div className="m-1">
@@ -58,19 +60,29 @@ function LoginForm() {
           >
             Zaloguj się
           </button>
+          {window.innerWidth < 1024 && (
+            <button
+              onClick={handleOnClick}
+              className="w-40 rounded-3xl bg-teal-600 p-2 font-bold text-zinc-50"
+            >
+              Zarejestruj się
+            </button>
+          )}
         </form>
       </div>
-      <div className="mx-auto my-48 flex w-96 flex-col  items-center rounded rounded-l-none bg-zinc-300 px-9">
-        <p className="mt-48 text-center text-3xl">
-          Jeśli jesteś nowy to zarejestruj się przyciskiem poniżej!
-        </p>
-        <button
-          onClick={handleOnClick}
-          className="m-5 mt-8 w-40 rounded-3xl bg-teal-600 p-2 font-bold text-zinc-50"
-        >
-          Sign up
-        </button>
-      </div>
+      {window.innerWidth >= 1024 && (
+        <div className="flex h-[30rem] w-96 flex-col items-center justify-center rounded rounded-l-none bg-zinc-300">
+          <p className=" text-center text-3xl">
+            Jeśli jesteś nowy to zarejestruj się przyciskiem poniżej!
+          </p>
+          <button
+            onClick={handleOnClick}
+            className="mt-8 w-40 rounded-3xl bg-teal-600 p-2 font-bold text-zinc-50"
+          >
+            Zarejestruj się
+          </button>
+        </div>
+      )}
     </div>
   );
 }

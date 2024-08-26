@@ -1,6 +1,5 @@
-import { logout } from "../services/usersAPI";
+import { getUser, logout } from "../services/usersAPI";
 import { useNavigate } from "react-router-dom";
-import { useGetUser } from "../hooks/useGetUser";
 import { useContext, useEffect, useRef, useState } from "react";
 import Modal from "./itemInfo/Modal";
 import TrainingForm from "./trainingForm/TrainingForm";
@@ -9,9 +8,9 @@ import RecipeForm from "./recipeForm/RecipeForm";
 import { IoMdLogOut } from "react-icons/io";
 import { IoAddCircleOutline } from "react-icons/io5";
 import { MdAccountCircle } from "react-icons/md";
+import { useQuery } from "@tanstack/react-query";
 
 function BannerMenu() {
-  const { data, refetch } = useGetUser();
   const [openModal, setOpenModal] = useState(false);
   const [dropdownMenu, setDropdownMenu] = useState(false);
   const navigate = useNavigate();
@@ -19,6 +18,11 @@ function BannerMenu() {
   const activity = searchParams.get("activity");
   const dropdownRef = useRef(null);
   const createRef = useRef(null);
+
+  const { data, refetch } = useQuery({
+    queryKey: ["user"],
+    queryFn: getUser,
+  });
 
   const handleClickOutside = (e) => {
     if (!dropdownRef.current?.contains(e.target)) setDropdownMenu(false);
@@ -33,7 +37,7 @@ function BannerMenu() {
     if (data !== null) {
       logout();
       refetch();
-      navigate("../");
+      navigate("/login");
     }
     if (data === null) navigate("/login");
   }
@@ -60,8 +64,11 @@ function BannerMenu() {
             </span>
           </li>
           <li className="cursor-pointer ">
-            <span className="flex gap-2 p-1 font-bold text-emerald-800">
-              <IoMdLogOut color="#065f46 " size={25} onClick={handleLogin} />
+            <span
+              className="flex gap-2 p-1 font-bold text-emerald-800"
+              onClick={handleLogin}
+            >
+              <IoMdLogOut color="#065f46 " size={25} />
               Wyloguj
             </span>
           </li>

@@ -15,7 +15,6 @@ import {
   deleteRecipe,
   deleteRecipeLike,
 } from "../../services/recipesAPI";
-import { useLikeMutate } from "../../hooks/useLikeMutate";
 
 function ItemInfoMenu({
   itemId,
@@ -47,19 +46,24 @@ function ItemInfoMenu({
     },
   });
 
-  const { mutate: addLike, isPending: addLikePending } = useLikeMutate(
-    activity,
-    addTrainingLike,
-    addRecipeLike,
-    queryClient,
-  );
+  const { mutate: addLike, isPending: addLikePending } = useMutation({
+    mutationFn: activity === "training_plan" ? addTrainingLike : addRecipeLike,
+    onSettled: async () => {
+      return await queryClient.invalidateQueries({
+        queryKey: ["checkLike"],
+      });
+    },
+  });
 
-  const { mutate: deleteLike, isPending: deleteLikePending } = useLikeMutate(
-    activity,
-    deleteLikeTraining,
-    deleteRecipeLike,
-    queryClient,
-  );
+  const { mutate: deleteLike, isPending: deleteLikePending } = useMutation({
+    mutationFn:
+      activity === "training_plan" ? deleteLikeTraining : deleteRecipeLike,
+    onSettled: async () => {
+      return await queryClient.invalidateQueries({
+        queryKey: ["checkLike"],
+      });
+    },
+  });
 
   if (checkLike.isLoading) return;
 

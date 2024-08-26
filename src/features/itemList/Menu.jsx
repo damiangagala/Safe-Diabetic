@@ -1,9 +1,10 @@
 import { useContext } from "react";
 import { SearchContext } from "../../contexts/SearchProvider";
-import { useGetUser } from "../../hooks/useGetUser";
 import { FaStar } from "react-icons/fa";
 import { FaDumbbell } from "react-icons/fa6";
 import { PiForkKnifeFill } from "react-icons/pi";
+import { getUser } from "../../services/usersAPI";
+import { useQuery } from "@tanstack/react-query";
 
 function Menu() {
   const small = "basis-6/12 p-[0.3rem] cursor-pointer mx-auto";
@@ -13,7 +14,10 @@ function Menu() {
 
   fav === "false" ? (fav = false) : (fav = true);
 
-  const { isLoading, data } = useGetUser();
+  const { isLoading, data } = useQuery({
+    queryKey: ["user"],
+    queryFn: getUser,
+  });
 
   if (isLoading) return;
   const test = data !== null;

@@ -1,8 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { addRecipe, editRecipe } from "../../services/recipesAPI";
 import toast from "react-hot-toast";
-import { useForm } from "react-hook-form";
-import { useFormFields } from "../../hooks/useFormFields";
+import { useFieldArray, useForm } from "react-hook-form";
 import { useEffect, useRef } from "react";
 import { getAuthorId } from "../../services/usersAPI";
 import {
@@ -59,7 +58,10 @@ function RecipeForm({ close, data, isEdit, outsideRef }) {
     },
   });
 
-  const { fields, append, remove } = useFormFields("ingredients", control);
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "ingredients",
+  });
 
   const ulRef = useRef(null);
 

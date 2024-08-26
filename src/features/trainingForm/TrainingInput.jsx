@@ -1,10 +1,13 @@
 import { useEffect } from "react";
-import { useFormFields } from "../../hooks/useFormFields";
 import FormFields from "./FormFields";
 import { IoIosAddCircleOutline } from "react-icons/io";
+import { useFieldArray } from "react-hook-form";
 
 function TrainingInput({ control, day, register, data, isEdit }) {
-  const { fields, append, remove, replace } = useFormFields(day, control);
+  const { fields, append, remove, replace } = useFieldArray({
+    control,
+    name: day,
+  });
 
   useEffect(() => {
     if (isEdit === true) {

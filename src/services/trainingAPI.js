@@ -99,13 +99,13 @@ export async function addTrainingPlan(items, author) {
     .from("training_week")
     .insert([
       {
-        monday: items.Poniedziałek,
-        tuesday: items.Wtorek,
-        wednesday: items.Środa,
-        thursday: items.Czwartek,
-        friday: items.Piątek,
-        saturday: items.Sobota,
-        sunday: items.Niedziela,
+        monday: items.Monday,
+        tuesday: items.Tuesday,
+        wednesday: items.Wednesday,
+        thursday: items.Thursday,
+        friday: items.Friday,
+        saturday: items.Saturday,
+        sunday: items.Sunday,
       },
     ])
     .select("id");

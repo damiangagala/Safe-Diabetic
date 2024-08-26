@@ -1,11 +1,15 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useGetUser } from "../../../hooks/useGetUser";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { deleteRecipeComment } from "../../../services/recipesAPI";
 import { FaTrash } from "react-icons/fa";
+import { getUser } from "../../../services/usersAPI";
 
 function Comment({ commentText, info, commentId }) {
-  const { data, isLoading } = useGetUser();
   const queryClient = useQueryClient();
+
+  const { isLoading, data } = useQuery({
+    queryKey: ["user"],
+    queryFn: getUser,
+  });
 
   const { mutate: deleteComment } = useMutation({
     mutationFn: deleteRecipeComment,

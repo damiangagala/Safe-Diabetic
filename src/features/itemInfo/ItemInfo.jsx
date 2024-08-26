@@ -40,7 +40,7 @@ function ItemInfo() {
   if (id === undefined) return;
   if (itemInfoQuery.isLoading || userQuery.isLoading)
     return (
-      <div className="flex  h-[70vh]  w-full content-center items-center lg:basis-4/6">
+      <div className="flex h-[70vh]  w-full content-center items-center lg:basis-4/6">
         <LoadSpinner color={"white"} size={"5rem"} thickness={"8px"} />;
       </div>
     );
