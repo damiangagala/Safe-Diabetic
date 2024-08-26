@@ -44,12 +44,21 @@ function BannerMenu() {
 
   return (
     <div className="absolute right-4 top-4 flex basis-1/4 cursor-pointer gap-6 ">
-      <span ref={dropdownRef} onClick={() => setDropdownMenu(!dropdownMenu)}>
-        <MdAccountCircle
-          size={window.innerWidth === 375 ? 42 : 51}
-          color="white"
-        />
-      </span>
+      {data !== null ? (
+        <span ref={dropdownRef} onClick={() => setDropdownMenu(!dropdownMenu)}>
+          <MdAccountCircle
+            size={window.innerWidth === 375 ? 42 : 51}
+            color="white"
+          />
+        </span>
+      ) : (
+        <button
+          className="rounded-md border-2 border-zinc-50 px-2 py-1 text-lg font-bold text-white"
+          onClick={() => navigate("/login")}
+        >
+          Zaloguj
+        </button>
+      )}
 
       {dropdownMenu && (
         <ul className=" absolute right-0 top-14 z-10 rounded-md bg-zinc-50 px-2 py-1">
