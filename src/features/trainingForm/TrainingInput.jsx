@@ -3,11 +3,21 @@ import FormFields from "./FormFields";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { useFieldArray } from "react-hook-form";
 
-function TrainingInput({ control, day, register, data, isEdit }) {
+function TrainingInput({ control, day, register, data, isEdit, errors }) {
   const { fields, append, remove, replace } = useFieldArray({
     control,
     name: day,
   });
+
+  const translate = {
+    monday: "Poniedziałek",
+    tuesday: "Wtorek",
+    wednesday: "Środa",
+    thursday: "Czwartek",
+    friday: "Piątek",
+    saturday: "Sobota",
+    sunday: "Niedziela",
+  };
 
   useEffect(() => {
     if (isEdit === true) {
@@ -21,7 +31,7 @@ function TrainingInput({ control, day, register, data, isEdit }) {
 
   return (
     <div className="mb-4 text-center">
-      <h3 className="text-lg font-bold">{day}</h3>
+      <h3 className="text-lg font-bold">{translate[day]}</h3>
       <ul className="flex flex-col">
         {fields.map((item, index) => {
           return (
@@ -30,6 +40,7 @@ function TrainingInput({ control, day, register, data, isEdit }) {
               key={item.id}
             >
               <FormFields
+                errors={errors}
                 register={register}
                 index={index}
                 day={day}
@@ -41,6 +52,7 @@ function TrainingInput({ control, day, register, data, isEdit }) {
         })}
 
         <button
+          style={{ display: fields.length > 8 ? "none" : "block" }}
           className="mx-auto mt-1 "
           type="button"
           onClick={() => append({})}

@@ -42,7 +42,7 @@ function ItemList() {
     );
 
   return (
-    <div className="rounded-b-sm p-[0.3rem] text-white">
+    <div className="scrollbar overflow-y-auto overflow-x-hidden rounded-b-sm p-[0.3rem] text-white">
       {itemQuery.data.map((info) => (
         <Item
           key={itemQuery.data.indexOf(info)}

@@ -99,13 +99,13 @@ export async function addTrainingPlan(items, author) {
     .from("training_week")
     .insert([
       {
-        monday: items.Monday,
-        tuesday: items.Tuesday,
-        wednesday: items.Wednesday,
-        thursday: items.Thursday,
-        friday: items.Friday,
-        saturday: items.Saturday,
-        sunday: items.Sunday,
+        monday: items.monday,
+        tuesday: items.tuesday,
+        wednesday: items.wednesday,
+        thursday: items.thursday,
+        friday: items.friday,
+        saturday: items.saturday,
+        sunday: items.sunday,
       },
     ])
     .select("id");
@@ -126,16 +126,17 @@ export async function addTrainingPlan(items, author) {
 }
 
 export async function editTrainingPlan(items, author, planId, trainingId) {
+  console.log(items);
   const { error: training_weekError } = await supabase
     .from("training_week")
     .update({
-      monday: items.Poniedziałek,
-      tuesday: items.Wtorek,
-      wednesday: items.Środa,
-      thursday: items.Czwartek,
-      friday: items.Piątek,
-      saturday: items.Sobota,
-      sunday: items.Niedziela,
+      monday: items.monday,
+      tuesday: items.tuesday,
+      wednesday: items.wednesday,
+      thursday: items.thursday,
+      friday: items.friday,
+      saturday: items.saturday,
+      sunday: items.sunday,
     })
     .eq("id", trainingId)
     .select();

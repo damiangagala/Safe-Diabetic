@@ -48,7 +48,9 @@ function ItemInfo() {
   return (
     <section className="relative flex h-[70vh] w-full flex-col  lg:basis-4/6">
       <div className="basis-1/6 rounded-t-xl bg-emerald-800 text-center text-zinc-100">
-        <h1 className="pt-9 text-3xl font-bold">{itemInfoQuery.data.title}</h1>
+        <h1 className="pt-9 text-3xl font-bold">
+          {itemInfoQuery.data.title.toUpperCase()}
+        </h1>
         {userQuery.data !== null ? (
           <ItemInfoMenu
             itemId={itemId}

@@ -48,7 +48,13 @@ function RecipeForm({ close, data, isEdit, outsideRef }) {
     },
   });
 
-  const { register, control, handleSubmit, reset } = useForm({
+  const {
+    register,
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
       title: data?.title,
       time: data?.time,
@@ -102,21 +108,60 @@ function RecipeForm({ close, data, isEdit, outsideRef }) {
         <label className="p-1 text-lg font-bold">Tytuł</label>
         <input
           className="mb-2 rounded-md p-1 text-emerald-900"
-          {...register("title")}
+          {...register("title", {
+            required: "Uzupełnij pole.",
+            maxLength: {
+              value: 100,
+              message: "Maksymalna długość to 100 znaków.",
+            },
+          })}
         />
+
+        {errors.title && (
+          <p className="mb-0 pl-2 font-extrabold text-yellow-400">
+            {errors.title.message}
+          </p>
+        )}
+
         <label className="text-lg font-bold">Opis</label>
         <textarea
           className="mb-2 h-[5em]  text-wrap rounded-md p-1 text-emerald-900"
-          {...register("description")}
+          {...register("description", {
+            required: "Uzupełnij pole.",
+            maxLength: {
+              value: 10000,
+              message: "Maksymalna długość to 10000 znaków.",
+            },
+          })}
         />
+
+        {errors.description && (
+          <p className="mb-0 pl-2 font-extrabold text-yellow-400">
+            {errors.description.message}
+          </p>
+        )}
+
         <label className="text-lg font-bold">Czas</label>
         <input
           type="number"
-          min={0}
-          defaultValue={0}
+          defaultValue={5}
           className="mb-2 rounded-md p-1 text-emerald-900"
-          {...register("time")}
+          {...register("time", {
+            required: "Uzupełnij pole.",
+            max: {
+              value: 500,
+              message: "Maksymalna wartość to 500 minut.",
+            },
+            min: { value: 5, message: "Minimalny czas to 5 minut." },
+          })}
         />
+
+        {errors.time && (
+          <p className="mb-0 pl-2 font-extrabold text-yellow-400">
+            {errors.time.message}
+          </p>
+        )}
+
         <label className="text-lg font-bold">Trudność</label>
         <select
           className="mb-4 rounded-md p-1 text-emerald-900"
@@ -128,7 +173,7 @@ function RecipeForm({ close, data, isEdit, outsideRef }) {
         </select>
         <ul
           ref={ulRef}
-          className="scrollbar flex max-h-[150px] flex-col overflow-auto"
+          className="scrollbar flex max-h-[90px] flex-col overflow-auto lg:max-h-[100px]"
         >
           {fields.map((item, index) => {
             return (
@@ -136,9 +181,18 @@ function RecipeForm({ close, data, isEdit, outsideRef }) {
                 className="m-2 mx-auto flex justify-center gap-1"
                 key={item.id}
               >
+                {errors.ingredients?.[index] && (
+                  <p className=" text-2xl font-extrabold text-red-500">!</p>
+                )}
                 <input
                   className="w-50 rounded-md p-1 text-emerald-900"
-                  {...register(`ingredients.${index}`)}
+                  {...register(`ingredients.${index}`, {
+                    required: "Uzupełnij pole.",
+                    maxLength: {
+                      value: 100,
+                      message: "Maksymalna długość to 100 znaków.",
+                    },
+                  })}
                 />
                 <button type="button" onClick={(e) => handleRemove(index, e)}>
                   <IoIosRemoveCircleOutline size={20} />
