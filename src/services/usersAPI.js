@@ -9,13 +9,19 @@ export async function login({ email, password }) {
   if (error) throw new Error("Niepoprawny email lub hasło!");
 }
 
-export async function signUp(mail, pswd) {
+export async function signUp(mail, pswd, username) {
   let { error } = await supabase.auth.signUp({
     email: mail,
     password: pswd,
   });
+  const user = await getUser();
+
+  let { error: profileError } = await supabase
+    .from("profiles")
+    .insert([{ user_id: user.id, username: username }]);
 
   if (error) throw new Error("Email już zajęty!");
+  if (profileError) throw new Error("Wystąpił problem z rejestracją!");
 }
 
 export async function logout() {

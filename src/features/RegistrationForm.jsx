@@ -13,7 +13,8 @@ function RegistrationForm() {
   const navigate = useNavigate();
 
   const { mutate: registration, isPending } = useMutation({
-    mutationFn: ({ formData }) => signUp(formData.mail, formData.password),
+    mutationFn: ({ formData }) =>
+      signUp(formData.mail, formData.password, formData.username),
     onSuccess: () => navigate("../login"),
   });
 
