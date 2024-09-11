@@ -35,7 +35,7 @@ function CommentsContainer() {
   });
 
   useEffect(() => {
-    if (commentsQuery.data && userData.id) {
+    if (commentsQuery.data && userData?.id) {
       const hasMatchingAuthor = commentsQuery.data.some(
         (comment) => comment.profiles.user_id === userData.id,
       );
