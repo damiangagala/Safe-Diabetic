@@ -52,7 +52,7 @@ function TrainingInput({ control, day, register, data, isEdit, errors }) {
         })}
 
         <button
-          style={{ display: fields.length > 8 ? "none" : "block" }}
+          style={{ display: fields.length > 6 ? "none" : "block" }}
           className="mx-auto mt-1 "
           type="button"
           onClick={() => append({})}

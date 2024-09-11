@@ -80,7 +80,6 @@ function ItemInfoMenu({
 
   return (
     <div>
-      <button></button>
       {itemInfoQuery.data.author_id === userQuery.data ? (
         <>
           <button

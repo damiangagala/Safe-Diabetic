@@ -15,6 +15,7 @@ function Comment({ commentText, info, commentId }) {
     mutationFn: deleteRecipeComment,
     onSuccess: queryClient.refetchQueries({ queryKey: ["comments"] }),
   });
+
   if (isLoading) return;
 
   return (

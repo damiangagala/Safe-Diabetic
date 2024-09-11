@@ -3,15 +3,16 @@ import {
   addRecipeComment,
   getRecipeComments,
 } from "../../../services/recipesAPI";
-import { getAuthorId } from "../../../services/usersAPI";
+import { getAuthorId, getUser } from "../../../services/usersAPI";
 import { useParams } from "react-router-dom";
 import Comment from "./Comment";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LoadSpinner from "../../../ui/LoadSpinner";
 
 function CommentsContainer() {
   const { id: recipeId } = useParams();
   const [newComment, setNewComment] = useState("");
+  const [addCommentVisibility, setAddCommentVisibility] = useState(true);
 
   const commentsQuery = useQuery({
     queryKey: ["comments", recipeId],
@@ -23,12 +24,26 @@ function CommentsContainer() {
     onSuccess: commentsQuery.refetch(),
   });
 
+  const { isLoading: userIsLoading, data: userData } = useQuery({
+    queryKey: ["user"],
+    queryFn: getUser,
+  });
+
   const { data: authorId, isLoading: authorIsLoading } = useQuery({
     queryKey: ["authorId"],
     queryFn: () => getAuthorId(),
   });
 
-  if (commentsQuery.isLoading || authorIsLoading)
+  useEffect(() => {
+    if (commentsQuery.data && userData.id) {
+      const hasMatchingAuthor = commentsQuery.data.some(
+        (comment) => comment.profiles.user_id === userData.id,
+      );
+      setAddCommentVisibility(!hasMatchingAuthor);
+    }
+  }, [commentsQuery.data, userData]);
+
+  if (commentsQuery.isLoading || authorIsLoading || userIsLoading)
     return (
       <div className="flex h-full bg-zinc-100">
         <LoadSpinner color={"#065f46"} size={"3rem"} thickness={"8px"} />
@@ -43,7 +58,7 @@ function CommentsContainer() {
 
   return (
     <ul className=" bg-zinc-100">
-      {authorId !== null && (
+      {authorId !== null && addCommentVisibility && (
         <form onSubmit={(e) => handleSubmit(e)}>
           <input
             value={newComment}

@@ -27,7 +27,7 @@ export async function getUser() {
   if (!session.session) return null;
 
   const { data, error } = await supabase.auth.getUser();
-  if (error) throw new Error("Nie zalogowany");
+  if (error) throw new Error("Niezalogowany");
 
   return data.user;
 }

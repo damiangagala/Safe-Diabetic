@@ -1,4 +1,3 @@
-import toast from "react-hot-toast";
 import { signUp } from "../services/usersAPI";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
@@ -37,31 +36,75 @@ function RegistrationForm() {
             className=" w-72 rounded-2xl p-2 pl-3 text-slate-400"
             placeholder="Email"
           />
+          {errors.mail && (
+            <p className="mb-1 pl-2 font-extrabold text-red-500">
+              {errors.mail.message}
+            </p>
+          )}
         </div>
         <div className="m-1">
           <input
             {...register("username", {
-              required: "Musisz podać maila",
+              required: "Musisz podać nazwę użytkownika",
+              minLength: {
+                value: 3,
+                message: "Nazwa użytkownika musi mieć minimum 3 znaki",
+              },
+              amxLength: {
+                value: 12,
+                message: "Nazwa użytkownika musi mieć maksymalnie 12 znaków",
+              },
             })}
-            className=" w-72 rounded-2xl p-2 pl-3 text-slate-400"
+            className=" w-72 max-w-80 rounded-2xl p-2 pl-3 text-slate-400"
             placeholder="Nazwa użytkownika"
           />
+          {errors.username && (
+            <p className="mb-1 w-72 pl-2 font-extrabold text-red-500">
+              {errors.username.message}
+            </p>
+          )}
         </div>
-        <div className="m-2 ">
+        <div className="m-1 ">
           <input
-            {...register("password", { minLength: 6 })}
+            {...register("password", {
+              required: "Uzupełnij pole.",
+              minLength: {
+                value: 6,
+                message: "Minimalna długość hasła to 6 znaków",
+              },
+              maxLength: {
+                value: 30,
+                message: "Maksymalna długość hasła to 30 znaków",
+              },
+            })}
             className="w-72 rounded-2xl p-2 pl-3 text-slate-400"
             type="password"
             placeholder="Hasło"
           />
+          {errors.password && (
+            <p className="mb-1 w-72 pl-2 font-extrabold text-red-500">
+              {errors.password.message}
+            </p>
+          )}
         </div>
-        <div className="m-2 ">
+        <div className="m-1">
           <input
-            {...register("repeat", { minLength: 6 })}
+            {...register("repeat", {
+              required: "Uzupełnij pole",
+              minLength: {
+                value: 6,
+                message: "Minimalna długość hasła to 6 znaków",
+              },
+            })}
             className="w-72 rounded-2xl p-2 pl-3 text-slate-400"
             type="password"
             placeholder="Powtórz hasło"
           />
+          {errors.repeat && (
+            <p className="mb-1 w-72 pl-2 font-extrabold text-red-500">
+              {errors.repeat.message}
+            </p>
+          )}
         </div>
         <button
           className="my-5 w-40 cursor-pointer rounded-3xl bg-teal-700 p-2 font-bold text-zinc-50"

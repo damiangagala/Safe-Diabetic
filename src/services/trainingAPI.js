@@ -126,7 +126,6 @@ export async function addTrainingPlan(items, author) {
 }
 
 export async function editTrainingPlan(items, author, planId, trainingId) {
-  console.log(items);
   const { error: training_weekError } = await supabase
     .from("training_week")
     .update({

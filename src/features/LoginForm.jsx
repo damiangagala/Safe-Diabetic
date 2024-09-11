@@ -2,22 +2,24 @@ import { useNavigate } from "react-router-dom";
 import { getUser, login as loginAPI } from "../services/usersAPI";
 import { useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 function LoginForm() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const { mutate: login } = useMutation({
+    mutationFn: loginAPI,
+    onSuccess: () => navigate("/", { replace: true }),
+    onError: () => toast.error("Niepoprawne dane logowania"),
+  });
+
   const { isLoading } = useQuery({
     queryKey: ["user"],
     queryFn: getUser,
   });
 
-  const { mutate: login } = useMutation({
-    mutationFn: loginAPI,
-    onSuccess: () => navigate("/", { replace: true }),
-    onError: () => null,
-  });
   if (isLoading) return;
 
   function handleOnClick() {
