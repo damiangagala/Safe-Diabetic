@@ -14,7 +14,7 @@ function ItemBox() {
               ? { visibility: "hidden" }
               : { visibility: "visible" }
           }
-          className="top-22 absolute flex h-[70vh] flex-col rounded-md  bg-zinc-50 lg:w-[25vw] xl:w-[20vw]"
+          className="top-22 absolute flex h-[70vh] w-[70vw] flex-col rounded-md bg-zinc-50 md:w-auto md:min-w-[36vw] lg:w-[25vw] xl:w-[20vw]"
         >
           <Menu />
           <ItemList />

@@ -36,7 +36,7 @@ function ItemList() {
 
   if (itemQuery.error)
     return (
-      <div className=" rounded-b-sm bg-sky-950 p-[0.3rem] text-white">
+      <div className="rounded-b-sm p-[0.3rem] text-white">
         <p>{itemQuery.error.message}</p>
       </div>
     );
